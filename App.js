@@ -1,4 +1,4 @@
-import { StatusBar, Alert, FlatList } from 'react-native';
+import { StatusBar, Alert, FlatList, ActivityIndicator, Text, RefreshControl } from 'react-native';
 import { Post } from './components/Post';
 import styled from 'styled-components/native'
 import axios from 'axios'
@@ -7,6 +7,12 @@ import { useState } from 'react';
 const AppView = styled.View`
   flex: 1;
   background-color: #ffffff;
+`
+
+const LoadingView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `
 
 const AppText = styled.Text``
@@ -26,7 +32,17 @@ export default function App() {
       setIsLoading(false);
     }
   }
+
   const [posts, setPosts] = useState(getPosts, []);
+
+  if (isLoading) {
+    return (
+      <LoadingView>
+        <ActivityIndicator size="large" />
+        <Text style={{ marginTop: 15 }}>Loading...</Text>
+      </LoadingView>
+    )
+  }
 
   return (
     <AppView>
@@ -37,6 +53,7 @@ export default function App() {
           title={item.title}
           createdAt={item.createdAt}
         />}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={getPosts} />}
       />
       <StatusBar theme="auto" />
     </AppView>
