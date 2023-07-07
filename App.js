@@ -2,6 +2,7 @@ import { StatusBar, View } from 'react-native';
 import styled from 'styled-components/native'
 
 const Post = styled.View`
+  flex-direction: row;
   padding: 15px;
   border-bottom-width: 1px;
   border-bottom-color: rgba(0, 0, 0, 0.1);
@@ -20,6 +21,16 @@ const PostTitle = styled.Text`
   font-weight: 700;
 `;
 
+const PostDetails = styled.View`
+  justify-content: center;
+`;
+
+const PostDate = styled.Text`
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-top: 2px;
+`;
+
 export default function App() {
   return (
     <View>
@@ -27,6 +38,10 @@ export default function App() {
         <PostImage source={{
           uri: 'https://steamuserimages-a.akamaihd.net/ugc/965368466530689205/DBB3A8840D1B894D2B85B5D96427C37956BBCEE7/?imw=1024&imh=591&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'
         }} />
+        <PostDetails>
+          <PostTitle>Test article</PostTitle>
+          <PostDate>07/12/2022</PostDate>
+        </PostDetails>
       </Post>
       <StatusBar theme="auto" />
     </View>
