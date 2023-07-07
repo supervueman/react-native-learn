@@ -1,49 +1,44 @@
-import { StatusBar, View } from 'react-native';
+import { StatusBar, Alert, FlatList } from 'react-native';
+import { Post } from './components/Post';
 import styled from 'styled-components/native'
+import axios from 'axios'
+import { useState } from 'react';
 
-const Post = styled.View`
-  flex-direction: row;
-  padding: 15px;
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(0, 0, 0, 0.1);
-  border-bottom-style: solid;
-`;
+const AppView = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+`
 
-const PostImage = styled.Image`
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  margin-right: 12px;
-`;
-
-const PostTitle = styled.Text`
-  font-size: 16px;
-  font-weight: 700;
-`;
-
-const PostDetails = styled.View`
-  justify-content: center;
-`;
-
-const PostDate = styled.Text`
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.4);
-  margin-top: 2px;
-`;
+const AppText = styled.Text``
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getPosts = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get('https://64a873bddca581464b85c12f.mockapi.io/post');
+      setPosts(data);
+    } catch (error) {
+      console.log(error);;
+      Alert.alert('Error', 'Error fetching posts!!!');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  const [posts, setPosts] = useState(getPosts, []);
+
   return (
-    <View>
-      <Post>
-        <PostImage source={{
-          uri: 'https://steamuserimages-a.akamaihd.net/ugc/965368466530689205/DBB3A8840D1B894D2B85B5D96427C37956BBCEE7/?imw=1024&imh=591&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'
-        }} />
-        <PostDetails>
-          <PostTitle>Test article</PostTitle>
-          <PostDate>07/12/2022</PostDate>
-        </PostDetails>
-      </Post>
+    <AppView>
+      <FlatList
+        data={posts}
+        renderItem={({item}) => <Post
+          imageUrl={item.imageUrl}
+          title={item.title}
+          createdAt={item.createdAt}
+        />}
+      />
       <StatusBar theme="auto" />
-    </View>
+    </AppView>
   );
 }
