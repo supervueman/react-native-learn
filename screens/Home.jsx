@@ -37,7 +37,7 @@ export const Home = ({ navigation }) => {
       <FlatList
         data={posts}
         renderItem={({item}) => (
-            <TouchableOpacity onPress={() => navigation.navigate('FullPost', { id: item.id, title: item.title })}>
+            <TouchableOpacity onPress={() => navigation.navigate('FullPost', { id: item.id })}>
               <Post
                 imageUrl={item.imageUrl}
                 title={item.title}

@@ -25,14 +25,19 @@ const PostText = styled.Text`
 
 export const FullPost = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [post, setPost] = useState(getPost, []);
 
-  const { id, title } = route.params;
+  const { id } = route.params;
 
   const getPost = async () => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(`https://64a873bddca581464b85c12f.mockapi.io/post/${id}`);
       setPost(data);
+
+      navigation.setOptions({
+        title: data.title,
+      });
     } catch (error) {
       console.log(error);;
       Alert.alert('Error', 'Error fetching post!!!');
@@ -41,13 +46,8 @@ export const FullPost = ({ route, navigation }) => {
     }
   }
 
-  const [post, setPost] = useState(getPost, []);
-
   useEffect(() => {
     getPost();
-    navigation.setOptions({
-      title,
-    });
   }, [])
 
   if (isLoading) {
