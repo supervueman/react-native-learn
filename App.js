@@ -1,7 +1,6 @@
 import { StatusBar } from 'react-native';
-import { Home } from './screens/Home';
 import styled from 'styled-components/native'
-import { FullPost } from './screens/FullPost';
+import { Navigation } from './screens/Navigation';
 
 const AppView = styled.View`
   flex: 1;
@@ -10,10 +9,6 @@ const AppView = styled.View`
 
 export default function App() {
   return (
-    <AppView>
-      <Home />
-      {/* <FullPost /> */}
-      <StatusBar theme="auto" />
-    </AppView>
+    <Navigation />
   );
 }

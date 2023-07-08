@@ -34,7 +34,9 @@ export const FullPost = () => {
 
   const [post, setPost] = useState(getPost, []);
 
-  useEffect(() => getPost(), [])
+  useEffect(() => {
+    getPost();
+  }, [])
 
   if (isLoading) {
     return (<Loading />)

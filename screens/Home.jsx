@@ -10,7 +10,7 @@ import axios from 'axios'
 import { useState } from 'react';
 import { Loading } from '../components/Loading';
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const getPosts = async () => {
@@ -26,7 +26,7 @@ export const Home = () => {
     }
   }
 
-  const [posts, setPosts] = useState(getPosts, []);
+  const [posts, setPosts] = useState(() => getPosts(), []);
 
   if (isLoading) {
     return < Loading />
@@ -37,7 +37,7 @@ export const Home = () => {
       <FlatList
         data={posts}
         renderItem={({item}) => (
-            <TouchableOpacity onPress={() => alert('PRESS')}>
+            <TouchableOpacity onPress={() => navigation.navigate('FullPost')}>
               <Post
                 imageUrl={item.imageUrl}
                 title={item.title}
