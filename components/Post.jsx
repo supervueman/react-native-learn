@@ -33,14 +33,23 @@ const PostDate = styled.Text`
 
 // https://steamuserimages-a.akamaihd.net/ugc/965368466530689205/DBB3A8840D1B894D2B85B5D96427C37956BBCEE7/?imw=1024&imh=591&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true
 
+const truncateTitle = (str) => {
+  if (str.length >= 20) {
+    return `${str.substring(0, 20)}...`;
+  }
+
+
+  return str;
+}
+
 export const Post = ({ title, imageUrl, createdAt }) => {
   return <PostView>
     <PostImage source={{
       uri: imageUrl
     }} />
     <PostDetails>
-      <PostTitle>{ title }</PostTitle>
-      <PostDate>{ createdAt }</PostDate>
+      <PostTitle>{ truncateTitle(title) }</PostTitle>
+      <PostDate>{ new Date(createdAt).toLocaleDateString() }</PostDate>
     </PostDetails>
   </PostView>
 }

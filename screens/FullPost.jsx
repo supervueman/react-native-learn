@@ -11,18 +11,27 @@ const PostImage = styled.Image`
   margin-bottom: 20px;
 `;
 
+const PostTitle = styled.Text`
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+`;
+
 const PostText = styled.Text`
   font-size: 18px;
   line-height: 24px;
 `;
 
-export const FullPost = () => {
+export const FullPost = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const { id, title } = route.params;
 
   const getPost = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get('https://64a873bddca581464b85c12f.mockapi.io/post/1');
+      const { data } = await axios.get(`https://64a873bddca581464b85c12f.mockapi.io/post/${id}`);
       setPost(data);
     } catch (error) {
       console.log(error);;
@@ -36,6 +45,9 @@ export const FullPost = () => {
 
   useEffect(() => {
     getPost();
+    navigation.setOptions({
+      title,
+    });
   }, [])
 
   if (isLoading) {
@@ -45,6 +57,9 @@ export const FullPost = () => {
   return (
     <View style={{ padding: 20 }}>
       <PostImage source={{ uri: post.imageUrl }} />
+      <PostTitle>
+        { post.title }
+      </PostTitle>
       <PostText>
         { post.text }
       </PostText>
