@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -55,7 +55,7 @@ export const FullPost = ({ route, navigation }) => {
   }
 
   return (
-    <View style={{ padding: 20 }}>
+    <ScrollView style={{ padding: 20 }}>
       <PostImage source={{ uri: post.imageUrl }} />
       <PostTitle>
         { post.title }
@@ -63,6 +63,6 @@ export const FullPost = ({ route, navigation }) => {
       <PostText>
         { post.text }
       </PostText>
-    </View>
+    </ScrollView>
   )
 }
